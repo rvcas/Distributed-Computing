@@ -1,2 +1,1 @@
-# COP4520
-Concepts of Parallel and Distributed Processing
+# Concepts of Parallel and Distributed Processing
