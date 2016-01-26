@@ -1,12 +1,12 @@
 # COP 4520: Parallel Algorithms and Programming Spring 2016
 
-**Instructor**: Dr. Damian Dechev Office tel.: 407-823-2549 email: dechev@eecs.ucf.edu
+**Instructor**: Dr. Damian Dechev **Office tel.**: 407-823-2549 **email**: dechev@eecs.ucf.edu
 
 **Lecture meetings: Mo We 4:30 PM - 5:45 PM @ HEC 0118**
 
 **Office hours: Mo 3:00 PM - 4:30 PM @ HEC 0211**
 
-**Teaching Assistant: Kishore Debnath** email: kishore.debnath@knights.ucf.edu
+**Teaching Assistant**: Kishore Debnath **email**: kishore.debnath@knights.ucf.edu
 
 **TA office hours: TBA**
 
@@ -30,7 +30,7 @@ The class meetings will not consist of traditional lectures, with the instructor
 
 **Letter grades**: 90-100: A, 80-89: B, 70-79: C, 50-69: D, Below 50: F.
 
-**Note**:Any academic dishonesty (including, but not limited to, Cheating, copying and/or plagiarism) with respect to any exam or assignment in this class will result in a grade of F, following by the usual procedures for dealing with such behavior, as describe in the UCF Golden Rule : a handbook for students.
+**Note**: Any academic dishonesty (including, but not limited to, Cheating, copying and/or plagiarism) with respect to any exam or assignment in this class will result in a grade of F, following by the usual procedures for dealing with such behavior, as describe in the UCF Golden Rule : a handbook for students.
 
 ## The Semester Plan
 - Mutual exclusion
