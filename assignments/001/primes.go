@@ -1,94 +1,33 @@
-//Lucas Rosa
-//COP 4520
+// A concurrent prime sieve
 package main
 
-import (
-	"fmt"
-    "os"
-	"strconv"
-	"time"
-)
-
-func check(e error) {
-    if e != nil {
-        panic(e)
-    }
+// Send the sequence 2, 3, 4, ... to channel 'ch'.
+func Generate(ch chan<- int) {
+	for i := 2; ; i++ {
+		ch <- i // Send 'i' to channel 'ch'.
+	}
 }
 
-// Doesn't return a prime literaly, but the least value to be used
-// to filter out non prime numbers from an array or slice
-func nextPrime(a []int, factor int) (newFactor int) {
-    for _, v := range a {
-        if v > factor {
-            newFactor = v
-            break
-        }
-    }
-    return
-}
-
-func main() {
-	t1 := time.Now()
-
-	f, err := os.Create("output.txt")
-    check(err)
-
-    defer f.Close()
-
-    // Create slice containing values from 0 to 1 million
-    a := []int{}
-    for i := 0; i < 1000000; i++ {
-        a = append(a, i)
-    }
-
-    done := false
-    factor := 1
-    for !done {
-        // Get the next factor to be used as a filter for slice `a`
-        factor = nextPrime(a, factor)
-
-        var modified bool
-        // Filtering slice `a`
-        for i, v := range a {
-            if v%factor == 0 && v > factor {
-                a[i] = 0 // This is equivalent to eliminating the value
-                modified = true
-            }
-        }
-
-        if !modified {
-            done = true
-        }
-    }
-
-    var sum int
-	var total int
-    for _, v := range a {
-        sum += v
-		if v != 0 {
-			total += 1
-		}
-    }
-
-    t2 := time.Now()
-
-	n2, err := f.WriteString("Execution Time: " + t2.Sub(t1).String() + " Total:" + strconv.Itoa(total) + " Sum: " + strconv.Itoa(sum) + "\n" + "Top Ten Primes:\n")
-	check(err)
-	fmt.Printf("wrote %d bytes\n", n2)
-
-	var count int
-	for j := len(a) - 1; j >= 0; j-- {
-		if a[j] != 0 {
-			n2, err := f.WriteString(strconv.Itoa(a[j]) + "\n")
-			check(err)
-			fmt.Printf("wrote %d bytes\n", n2)
-			count += 1
-
-			if count >= 10 {
-				break
-			}
+// Copy the values from channel 'in' to channel 'out',
+// removing those divisible by 'prime'.
+func Filter(in <-chan int, out chan<- int, prime int) {
+	for {
+		i := <-in // Receive value from 'in'.
+		if i%prime != 0 {
+			out <- i // Send 'i' to 'out'.
 		}
 	}
+}
 
-	f.Sync()
+// The prime sieve: Daisy-chain Filter processes.
+func main() {
+	ch := make(chan int) // Create a new channel.
+	go Generate(ch)      // Launch Generate goroutine.
+	for i := 0; i < 10; i++ {
+		prime := <-ch
+		print(prime, "\n")
+		ch1 := make(chan int)
+		go Filter(ch, ch1, prime)
+		ch = ch1
+	}
 }
