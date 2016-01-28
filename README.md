@@ -48,3 +48,4 @@ The class meetings will not consist of traditional lectures, with the instructor
 - The application of static and dynamic program analysis for concurrency
 - New programming models and frameworks for multi-core computing
 - The role of advanced architecture simulators for the design of alternative programming models
+- Test
