@@ -1,5 +1,4 @@
 // Lucas Rosa
-// lu599305
 
 // package must be main to run
 package main
