@@ -6,4 +6,8 @@ Please, first clearly explain the problem and then discuss your proposed solutio
 
 Present any necessary background information when needed.
 
-**My problem**: Chapter 11, Exercise 127
+### Chapter 11, Exercise 127
+Design a bounded lock-based Stack<T> using an array.
+
+1. Use a single lock and a bounded array.
+1. Try to make your algorithm lock-free. Where do you run into difficulty?
