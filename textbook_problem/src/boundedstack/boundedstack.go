@@ -6,7 +6,7 @@ import (
 )
 
 const (
-  SIZE = 500000
+  SIZE = 1000000
 )
 
 type Element struct {
@@ -24,21 +24,21 @@ func New() *BoundedStack {
   return new(BoundedStack).init()
 }
 
-func (s *BoundedStack) Push(v interface{}) bool {
+func (s *BoundedStack) Push(v interface{}) interface{} {
   if (s.full()) {
-    return false
+    return "FAILED STACK IS FULL"
   }
 
   s.Elements[s.top+1].Value = v
   s.top++
   s.len++
 
-  return true
+  return v
 }
 
 func (s *BoundedStack) Pop() interface{} {
   if (s.empty()) {
-    return "FAILED TO POP STACK IS EMPTY"
+    return "FAILED STACK IS EMPTY"
   }
 
   retval := s.Elements[s.top]
