@@ -7,13 +7,13 @@ import (
 )
 
 func test_three() {
-  t1 := time.Now()
-
   s := boundedstack.New()
   threadCount := 4
   totalOps := NUMOPS*threadCount
 
   c := make(chan int, totalOps)
+
+  t1 := time.Now()
 
   for threadID := 1; threadID <= threadCount; threadID++ {
     go thread(s, c, threadID)

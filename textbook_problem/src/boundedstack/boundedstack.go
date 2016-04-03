@@ -16,7 +16,7 @@ type Element struct {
 type BoundedStack struct {
   top int
   len int
-  Lock sync.Mutex
+  lock sync.Mutex
   Elements [SIZE]Element
 }
 
@@ -24,36 +24,53 @@ func New() *BoundedStack {
   return new(BoundedStack).init()
 }
 
-func (s *BoundedStack) Push(v interface{}) interface{} {
+func (s *BoundedStack) Push(v interface{}) (retval interface{}) {
+  s.lock.Lock()
+  defer s.lock.Unlock()
+
   if (s.full()) {
     return "FAILED STACK IS FULL"
   }
 
-  s.Elements[s.top+1].Value = v
+  retval, s.Elements[s.top+1].Value = v, v
+
   s.top++
   s.len++
 
-  return v
+  return
 }
 
-func (s *BoundedStack) Pop() interface{} {
+func (s *BoundedStack) Pop() (retval interface{}) {
+  s.lock.Lock()
+  defer s.lock.Unlock()
+
   if (s.empty()) {
     return "FAILED STACK IS EMPTY"
   }
 
-  retval := s.Elements[s.top]
+  retval = s.Elements[s.top].Value
+
+  s.Elements[s.top].Value = nil
 
   s.top--
   s.len--
 
-  return retval.Value
+  return
 }
 
-func (s *BoundedStack) Top() interface{} {
-  return s.Elements[s.top].Value
+func (s *BoundedStack) Top() (retval interface{}) {
+  s.lock.Lock()
+  defer s.lock.Unlock()
+
+  retval = s.Elements[s.top].Value
+
+  return
 }
 
 func (s *BoundedStack) Len() int {
+  s.lock.Lock()
+  defer s.lock.Unlock()
+
   return s.len
 }
 

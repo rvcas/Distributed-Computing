@@ -23,15 +23,11 @@ func main() {
 
 func thread(s *boundedstack.BoundedStack, c chan int, threadID int) {
   for count := 0; count < NUMOPS; count++ {
-      s.Lock.Lock()
-
       if (count+1)%3 == 0 {
-          s.Pop()
+        s.Pop()
       } else {
-          s.Push(DATA)
+        s.Push(DATA)
       }
-
-      s.Lock.Unlock()
 
       c <- DONE
   }
