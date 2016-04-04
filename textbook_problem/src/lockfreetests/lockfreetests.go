@@ -1,7 +1,7 @@
 package main
 
 import (
-  "boundedstack"
+  "lockfreestack"
   "fmt"
   "math/rand"
   "os"
@@ -16,7 +16,7 @@ func main() {
   }
 
   if !Verbose {
-    fmt.Println("# Bounded Stack Size:", boundedstack.SIZE)
+    fmt.Println("# Lock-Free Bounded Stack Size:", boundedstack.SIZE)
     fmt.Println("# Each Thread Executes", NUMOPS, "Operations\n")
   }
 
@@ -26,7 +26,7 @@ func main() {
   eight_threads()
 }
 
-func thread(s *boundedstack.BoundedStack, c chan int, threadID int, todo *[NUMOPS]int) {
+func thread(s *lockfreestack.LockFreeStack, threadID int, todo *[NUMOPS]int) {
   for task := 0; task < NUMOPS; task++ {
     if todo[task] == POP {
       v, err := s.Pop()
@@ -49,15 +49,13 @@ func thread(s *boundedstack.BoundedStack, c chan int, threadID int, todo *[NUMOP
         }
       }
     }
-
-    c <- DONE
   }
 }
 
 func test_case(totalops int, percentpop int, caseNum int, numThreads int) {
   todo := generate_tasks(percentpop)
 
-  s := boundedstack.New()
+  s := lockfreestack.New()
 
   c := make(chan int, totalops)
 

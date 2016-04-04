@@ -1,0 +1,2 @@
+// Lucas Rosa
+package lockfreestack
