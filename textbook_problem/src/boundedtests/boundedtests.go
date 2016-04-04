@@ -15,8 +15,10 @@ func main() {
     }
   }
 
-  fmt.Println("# Bounded Stack Size:", boundedstack.SIZE)
-  fmt.Println("# Each Thread Executes", NUMOPS, "Operations\n")
+  if !Verbose {
+    fmt.Println("# Bounded Stack Size:", boundedstack.SIZE)
+    fmt.Println("# Each Thread Executes", NUMOPS, "Operations\n")
+  }
 
   one_thread()
   two_threads()
@@ -71,9 +73,11 @@ func test_case(totalops int, percentpop int, caseNum int, numThreads int) {
 
   t2 := time.Now()
 
-  fmt.Println("\t- Case", caseNum, ":", percentpop, "POP |", (100-percentpop), "PUSH")
-  fmt.Println("\t\tStack Height :", s.Len())
-  fmt.Println("\t\tExecution Time :", t2.Sub(t1), "\n")
+  if !Verbose {
+    fmt.Println("\t- Case", caseNum, ":", percentpop, "POP |", (100-percentpop), "PUSH")
+    fmt.Println("\t\tStack Height :", s.Len())
+    fmt.Println("\t\tExecution Time :", t2.Sub(t1), "\n")
+  }
 
 
   s = nil
