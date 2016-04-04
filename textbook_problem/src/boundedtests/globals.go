@@ -5,7 +5,7 @@ const (
   PUSH = 0
   DATA = 4
   DONE = 1
-  NUMOPS = 10
+  NUMOPS = 500000
   ONETHREAD = 1
   TWOTHREADS = 2
   FOURTHREADS = 4

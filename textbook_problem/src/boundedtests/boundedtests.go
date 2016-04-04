@@ -24,7 +24,7 @@ func main() {
   eight_threads()
 }
 
-func thread(s *boundedstack.BoundedStack, c chan int, threadID int, todo [NUMOPS]int) {
+func thread(s *boundedstack.BoundedStack, c chan int, threadID int, todo *[NUMOPS]int) {
   for task := 0; task < NUMOPS; task++ {
       if todo[task] == POP {
         v, err := s.Pop()
@@ -52,6 +52,33 @@ func thread(s *boundedstack.BoundedStack, c chan int, threadID int, todo [NUMOPS
   }
 }
 
+func test_case(totalops int, percentpop int, caseNum int, numThreads int) {
+  todo := generate_tasks(percentpop)
+
+  s := boundedstack.New()
+
+  c := make(chan int, totalops)
+
+  t1 := time.Now()
+
+  for threadID := 1; threadID <= numThreads; threadID++ {
+    go thread(s, c, threadID, &todo)
+  }
+
+  for i := 0; i < totalops; i++ {
+      <-c
+  }
+
+  t2 := time.Now()
+
+  fmt.Println("\t- Case", caseNum, ":", percentpop, "POP |", (100-percentpop), "PUSH")
+  fmt.Println("\t\tStack Height :", s.Len())
+  fmt.Println("\t\tExecution Time :", t2.Sub(t1), "\n")
+
+
+  s = nil
+}
+
 func generate_tasks(percentpop int) [NUMOPS]int {
   var todo [NUMOPS]int
 
@@ -60,8 +87,10 @@ func generate_tasks(percentpop int) [NUMOPS]int {
   for task := 0; task < NUMOPS; task++ {
     randNum := r.Intn(101)
 
-    if (randNum <= percentpop) {
+    if randNum <= percentpop {
       todo[task] = POP
+    } else if randNum <= 100 {
+      todo[task] = PUSH
     } else {
       todo[task] = PUSH
     }

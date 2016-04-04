@@ -7,7 +7,7 @@ import (
 )
 
 const (
-  SIZE = 1000
+  SIZE = 1000000
   TIMEOUT = time.Microsecond
 )
 
@@ -171,7 +171,7 @@ func (s *BoundedStack) Peek() (interface{}, error) {
   }
 
   return nil, ErrEmpty
-} 
+}
 
 func (s *BoundedStack) Len() int {
   s.lock.Lock()
