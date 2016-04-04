@@ -93,8 +93,6 @@ func generate_tasks(percentpop int) [NUMOPS]int {
 
     if randNum <= percentpop {
       todo[task] = POP
-    } else if randNum <= 100 {
-      todo[task] = PUSH
     } else {
       todo[task] = PUSH
     }
