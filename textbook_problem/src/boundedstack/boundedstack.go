@@ -12,7 +12,7 @@ const (
 )
 
 type BoundedStack struct {
-  top int
+  head int
   len int
   waiters waiters
   lock sync.Mutex
