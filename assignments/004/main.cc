@@ -1,6 +1,7 @@
+#include "linked_list.hpp"
 #include <threads.h>
 
-user_main(int argc, char *argv[]) {
+int user_main(int argc, char *argv[]) {
 
 }
 
@@ -17,5 +18,5 @@ static void remove(void *obj) {
 }
 
 static void contain(void *obj) {
-  
+
 }
